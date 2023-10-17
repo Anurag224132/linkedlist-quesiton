@@ -1,0 +1,138 @@
+// Lara is learning about linked lists in her computer science class and wants to practice performing operations on linked lists. Specifically, she's interested in deleting the middle element of a linked list. Can you help her by designing a program that allows her to delete the middle element from a linked list and visualize the result?
+
+
+
+// Manages a singly linked list.
+// Implements a function to delete the middle element from the linked list.
+// Provides a function to push elements onto the linked list.
+// Displays the elements of the linked list after deleting the middle element.
+
+
+// Note: This is a sample question asked in CTS recruitment.
+
+// Input format :
+// The input consists of an integer n from the user, indicating the number of elements to be pushed onto the linked list.
+
+// The linked list is initially filled with integers from n down to 1.
+
+// Output format :
+// The output prints the elements of the linked list after deleting the middle element.
+
+// Refer to the sample output for the exact format.
+
+// Code constraints :
+// n should be odd.
+
+// 3 <= n <= 51
+
+// Sample test cases :
+// Input 1 :
+// 7
+// Output 1 :
+// 1 2 3 5 6 7 
+// Input 2 :
+// 11
+// Output 2 :
+// 1 2 3 4 5 7 8 9 10 11 
+
+
+
+
+
+
+
+
+#include<iostream>
+using namespace std;
+class node{
+    public:
+    int val;
+    node* next;
+
+    node(int d){
+        val=d;
+        next=NULL;
+    }
+};
+class stack{
+    public:
+    int currsize;
+    int capacity;
+    node* head;
+    int sum;
+
+    stack(int c){
+        head=NULL;
+        capacity=c;
+        currsize=0;
+        sum=0;
+    }
+
+    bool isEmpty(){
+        return head=NULL;
+    }
+    bool isFull(){
+        return currsize==capacity;
+    }
+
+    int s(){
+        return sum;
+    }
+
+    void push(int val){
+        if(this->currsize==this->capacity){
+            cout<<"Overflow condition.";
+            return;
+        }
+        node* new_node=new node(val);
+        new_node->next=this->head;
+        this->head=new_node;
+        sum+=val;
+        this->currsize++;
+        return;
+    }
+
+    int pop(){
+        if(this->head==NULL){
+            cout<<"Underflow condition.";
+            return INT8_MIN;
+        }
+        node* newhead=this->head->next;
+        this->head->next=NULL;
+        int result=head->val;
+        node* deletednode=head;
+        head=newhead;
+        delete deletednode;
+        this->currsize--;
+        sum-=result;
+        return result;
+
+    }
+    int getTop(){
+        return this->head->val;
+    }
+};
+int main(){
+    int n;
+    cin>>n;
+    int a=n;
+    stack st(n);
+    while(n){
+        
+        int i=n;
+        cin>>i;
+        st.push(i);
+        
+        n--;
+    }
+    int m=a/2;
+    while(a){
+        if(st.getTop()==m+1){
+            st.pop();
+        }else{
+        cout<<st.getTop()<<" ";
+        st.pop();
+        }
+        a--;
+    }
+}
